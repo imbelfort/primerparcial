@@ -8,6 +8,7 @@ class ApiConfig {
   static const String relatedProducts = '/store/products/';
 
   // Autenticación
-  static const String login = '/auth/token/';
+  static const String login = '/auth/login/';
   static const String register = '/auth/register/';
+  static const String refreshToken = '/auth/token/refresh/';
 }

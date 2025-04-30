@@ -251,13 +251,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
               SizedBox(height: 16),
-              SizedBox(
-                height: 220,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: recommended.length,
-                  itemBuilder: (context, index) {
-                    final product = recommended[index];
+              // ENVOLVEMOS EN UN SCROLLABLE PARA EVITAR OVERFLOW
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: recommended.map((product) {
                     return GestureDetector(
                       onTap: () {
                         Navigator.pushReplacement(
@@ -282,6 +280,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     ? Image.network(
                                         product.image!,
                                         fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                            'assets/images/placeholder.png',
+                                            fit: BoxFit.cover,
+                                          );
+                                        },
                                       )
                                     : Image.asset(
                                         'assets/images/placeholder.png',
@@ -308,7 +313,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ),
                     );
-                  },
+                  }).toList(),
                 ),
               ),
             ],
