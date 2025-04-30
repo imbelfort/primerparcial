@@ -1,0 +1,2 @@
+C:/Users/Ishmael/Documents/GitHub/app_ventas/ecommerce-movil/android/app/.cxx/Debug/e305x6l3/x86/CMakeFiles/edit_cache.dir
+C:/Users/Ishmael/Documents/GitHub/app_ventas/ecommerce-movil/android/app/.cxx/Debug/e305x6l3/x86/CMakeFiles/rebuild_cache.dir

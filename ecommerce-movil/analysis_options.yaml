@@ -1,0 +1,32 @@
+# Activamos las reglas recomendadas de Flutter
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.gen.dart"
+    - "lib/generated/**"
+    - "lib/**.config.dart"  # opcional, si usás archivos generados por configuración
+
+linter:
+  rules:
+    # Puedes personalizar reglas aquí según tu estilo/preferencia
+
+    # Estilo
+    prefer_single_quotes: true
+    always_use_package_imports: true
+    require_trailing_commas: true
+    avoid_print: true  # mejor usar debugPrint o logs
+    avoid_unnecessary_containers: true
+
+    # Buenas prácticas
+    avoid_init_to_null: true
+    unnecessary_null_checks: true
+    sort_constructors_first: true
+    use_super_parameters: true
+
+    # Opcionales (desactivadas si preferís más libertad)
+    # lines_longer_than_80_chars: false
+    # public_member_api_docs: false
+    # avoid_classes_with_only_static_members: false

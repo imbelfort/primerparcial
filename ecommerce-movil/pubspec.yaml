@@ -1,0 +1,46 @@
+name: ElectroHub
+description: Una aplicación de e-commerce con desarrollada con Flutter
+publish_to: 'none' # Evita publicar en pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.6.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI & Utils
+  cupertino_icons: ^1.0.8
+  provider: ^6.0.5
+  shared_preferences: ^2.2.0
+  cached_network_image: ^3.2.3
+
+  # HTTP & JSON
+  http: ^1.1.0
+  intl: ^0.20.2
+
+  # Voz
+  speech_to_text: ^7.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0 # actualizada a versión más reciente
+  permission_handler: ^12.0.0+1
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/placeholder.png
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 300

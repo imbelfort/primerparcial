@@ -13,3 +13,40 @@ build/
 # General
 .vscode/
 .DS_Store
+
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# iOS
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# Android
+.android/
+*.iml
+
+# VS Code
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+
+# macOS
+macos/Flutter/Flutter.framework
+macos/Flutter/Flutter.podspec
+macos/Pods/
+macos/.symlinks/
+
+# Windows
+windows/Flutter/Flutter.framework
+windows/.symlinks/
+windows/Pods/
