@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ProductImage } from '../components/ProductImage';
 import RelatedProducts from '../components/machine-learning/RelatedProducts';
-import { useWishlist } from '../context/WishListContext';
+import { useWishlist } from '../context/WishlistContext';
 
 const ProductDetail = () => {
   const { id } = useParams();

@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { ShoppingCart, Heart, Eye } from 'lucide-react';
+import { ShoppingCart, Heart, Eye, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { useWishlist } from '../context/WishListContext';
+import { useWishlist } from '../context/WishlistContext';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
   const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -27,11 +28,18 @@ const ProductCard = ({ product }) => {
       {/* Imagen y acciones */}
       <div className="relative h-56 w-full overflow-hidden">
         <Link to={`/product/${product.id}`} className="block h-full">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-105"
-          />
+          {imageError || !product.image ? (
+            <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
+              <ImageIcon size={48} className="opacity-30" />
+            </div>
+          ) : (
+            <img
+              src={product.image}
+              alt={product.name}
+              onError={() => setImageError(true)}
+              className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-105"
+            />
+          )}
 
           {product.discountPercentage > 0 && (
             <span className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-bold rounded shadow">

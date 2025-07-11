@@ -7,7 +7,7 @@ import { CartProvider } from './context/CartContext';
 import './index.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useWishlist, WishlistProvider } from '../context/WishlistContext';
+import { useWishlist, WishlistProvider } from './context/WishlistContext';
 
 
 

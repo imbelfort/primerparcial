@@ -25,17 +25,18 @@ const ProductsPage = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 15; // Mostrar 15 productos por página
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`/store/products/?page=${currentPage}`);
+        const res = await axios.get(`/store/products/?page=${currentPage}&page_size=${itemsPerPage}`);
 
         setProducts(res.data.results);
         setFilteredProducts(res.data.results);
 
-        const total = Math.ceil(res.data.count / 10); // suponiendo 10 por página
+        const total = Math.ceil(res.data.count / itemsPerPage);
         setTotalPages(total);
 
         const uniqueCategories = [
@@ -138,10 +139,10 @@ const ProductsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-2 text-center">Productos</h1>
-  <p className="text-gray-600 mb-8 text-center max-w-2xl mx-auto">
-    Descubre nuestra colección de productos cuidadosamente seleccionados, diseñados para satisfacer tus necesidades con la mejor calidad y precio.
-  </p>
+      <h1 className="text-3xl font-bold mb-2 text-center">Productos</h1>
+      <p className="text-gray-600 mb-8 text-center max-w-2xl mx-auto">
+        Descubre nuestra colección de productos cuidadosamente seleccionados, diseñados para satisfacer tus necesidades con la mejor calidad y precio.
+      </p>
 
       {/* Search and sort - desktop */}
       <div className="hidden md:flex justify-between items-center mb-8">
@@ -388,7 +389,6 @@ const ProductsPage = () => {
                     <span>{category.name}</span>
                   </label>
                 ))}
-
               </div>
             </div>
 
@@ -467,8 +467,6 @@ const ProductsPage = () => {
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
-
-
             </div>
           ) : (
             <div className="text-center py-12">
@@ -482,36 +480,76 @@ const ProductsPage = () => {
               </button>
             </div>
           )}
-          <div className="flex justify-center mt-10 space-x-2">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-            >
-              Anterior
-            </button>
-
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`px-3 py-1 rounded ${page === currentPage
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-gray-100 hover:bg-gray-200'}`}
-              >
-                {page}
-              </button>
-            ))}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-            >
-              Siguiente
-            </button>
-          </div>
-
+          {totalPages > 1 && (
+            <div className="flex flex-col items-center mt-12 space-y-4">
+              <div className="text-sm text-gray-600">
+                Mostrando página {currentPage} de {totalPages}
+              </div>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => handlePageChange(1)}
+                  disabled={currentPage === 1}
+                  className="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Primera página"
+                >
+                  «
+                </button>
+                <button
+                  onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Página anterior"
+                >
+                  ‹
+                </button>
+                
+                {/* Mostrar solo algunas páginas alrededor de la actual */}
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  let pageNum;
+                  if (totalPages <= 5) {
+                    pageNum = i + 1;
+                  } else if (currentPage <= 3) {
+                    pageNum = i + 1;
+                  } else if (currentPage >= totalPages - 2) {
+                    pageNum = totalPages - 4 + i;
+                  } else {
+                    pageNum = currentPage - 2 + i;
+                  }
+                  
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`w-10 h-10 flex items-center justify-center rounded-md border ${currentPage === pageNum ? 'bg-emerald-600 text-white border-emerald-600' : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'} transition-colors`}
+                      aria-current={currentPage === pageNum ? 'page' : undefined}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+                
+                <button
+                  onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Siguiente página"
+                >
+                  ›
+                </button>
+                <button
+                  onClick={() => handlePageChange(totalPages)}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Última página"
+                >
+                  »
+                </button>
+              </div>
+              <div className="text-xs text-gray-500">
+                {products.length} productos por página
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
